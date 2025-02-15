@@ -7,6 +7,7 @@ public class WorkMode {
     private boolean statistic;
     private boolean fullStatistic;
 
+   //конструктор, который создает параметры объекта
     public WorkMode(String outputPath, String prefix, boolean appendMode, boolean statistic, boolean fullStatistic) {
         this.outputPath = outputPath;
         this.prefix = prefix;
@@ -15,6 +16,7 @@ public class WorkMode {
         this.fullStatistic = fullStatistic;
     }
 
+    //методы для получения значения переменных
     public String getOutputPath() {
         return outputPath;
     }

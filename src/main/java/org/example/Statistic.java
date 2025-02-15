@@ -77,9 +77,9 @@ public class Statistic {
 
     static void collectAndPrintStatistic(WorkMode workMode, List<String> integers,
                                          List<String> floats, List<String> strings ) {
-        String IntegerFileNameWithPrefix = workMode.getPrefix() + OutputFileTypes.INTEGER;
-        String FloatFileNameWithPrefix = workMode.getPrefix() + OutputFileTypes.FLOAT;
-        String StringFileNameWithPrefix = workMode.getPrefix() + OutputFileTypes.STRING;
+        String IntegerFileNameWithPrefix = workMode.getPrefix() + OutputFileTypes.INTEGER.getFileName();
+        String FloatFileNameWithPrefix = workMode.getPrefix() + OutputFileTypes.FLOAT.getFileName();
+        String StringFileNameWithPrefix = workMode.getPrefix() + OutputFileTypes.STRING.getFileName();
 
         if (workMode.isStatistic()) {
             if (!integers.isEmpty()) {

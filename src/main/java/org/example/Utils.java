@@ -18,11 +18,8 @@ public class Utils {
         boolean statistic = false;
         boolean fullStatistic = false;
 
-        List<String> arguments = Arrays.asList(args);
-
-        for (int i = 0; i < arguments.size(); i++) {
-            String arg = arguments.get(i);
-
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
             switch (arg) {
                 case "-a":
                     appendMode = true;
@@ -35,14 +32,14 @@ public class Utils {
                     break;
                 case "-p":
 
-                    if (i + 1 < arguments.size()) {
-                        prefix = arguments.get(i + 1);
+                    if (i + 1 < args.length) {
+                        prefix = args[i + 1];
                         i++;
                     }
                     break;
                 case "-o":
-                    if (i + 1 < arguments.size()) {
-                        outputPath = arguments.get(i + 1);
+                    if (i + 1 < args.length) {
+                        outputPath = args[i + 1];
                         i++;
                     }
                     break;
@@ -60,16 +57,18 @@ public class Utils {
 
 
     public static List<String> getInputFilesList(String[] args) {
-        List<String> inputFiles = new ArrayList<>();
+        List<String> inputFiles = new ArrayList<>();//создали ArrayList чтобы сложить туда сами файлы in1 in2
 
         int fileStartIndex = 0;
+        //идем по массиву аргументов из метода getInputFilesList
         for (int i = 0; i < args.length; i++) {
+            //если содержит - значит это флаг и пропускаем его
             if (args[i].startsWith("-")) {
+                //если этот флаг -о и -р значит пропускаем сам флаг и то, что за ним
                 if (args[i].equals("-o") || args[i].equals("-p")) {
                     i++;
                 }
             } else {
-
                 fileStartIndex = i;
                 break;
             }
@@ -84,7 +83,7 @@ public class Utils {
         List<String> fileContents = new ArrayList<>();
         for (String arg : inputFiles) {
             try {
-
+                //берем все строки сначала из in1, а потом из in2 и доб в fileContents
                 List<String> lines = Files.readAllLines(Paths.get(arg));
                 fileContents.addAll(lines);
             } catch (Exception e) {
@@ -94,12 +93,13 @@ public class Utils {
         return fileContents;
     }
 
-    public static void writeListToFile(List<String> list, String outputDir, String prefix, String fileName,
-                                       boolean isAppendMode) {
+    public static void writeListToFile(List<String> list, WorkMode workMode, String fileName) {
+        String outputDir = workMode.getOutputPath();
+        String prefix = workMode.getPrefix();
+        boolean isAppendMode =  workMode.isAppendMode();
         if (list.isEmpty()) {
             return;
         }
-
         boolean useCurrentDir = outputDir == null || outputDir.trim().isEmpty();
         String fullFileName;
         if (!useCurrentDir) {
@@ -134,6 +134,9 @@ public class Utils {
     }
 
     static boolean isFloat(String currentString) {
+        if (currentString.isEmpty()) {
+            return false;
+        }
         try {
             Double.parseDouble(currentString);
             return true;
@@ -146,15 +149,21 @@ public class Utils {
         if (currentString.isEmpty()) {
             return false;
         }
-        for (char c : currentString.toCharArray()) {
-            if (!Character.isDigit(c)) {
+        int i = 0;
+        if (currentString.charAt(i) == '-') {
+            i++;
+        }
+        while (i < currentString.length()) {
+            if (!Character.isDigit(currentString.charAt(i))) {
                 return false;
             }
+            i++;
         }
         return true;
     }
 
-    static void sort(List<String> fileContents, List<String> integers, List<String> floats, List<String> strings) {
+
+    static void sortIntoFiles(List<String> fileContents, List<String> integers, List<String> floats, List<String> strings) {
         for (String line : fileContents) {
             if (isInteger(line)) {
                 integers.add(line);
