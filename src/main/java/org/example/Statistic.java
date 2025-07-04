@@ -14,6 +14,7 @@ public class Statistic {
         BigInteger maxInt = new BigInteger(integers.getFirst());
         BigInteger sum = BigInteger.ZERO;
 
+
         for (String str : integers) {
             BigInteger num = new BigInteger(str);
             if (num.compareTo(minInt) < 0) {

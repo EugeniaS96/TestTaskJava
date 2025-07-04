@@ -1,6 +1,7 @@
 package org.example;
 
 public class WorkMode {
+
     private String outputPath;
     private String prefix;
     private boolean appendMode;

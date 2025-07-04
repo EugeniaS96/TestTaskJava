@@ -1,5 +1,4 @@
 package org.example;
-
 public enum OutputFileTypes {
     INTEGER("integers.txt"),
     FLOAT("floats.txt"),

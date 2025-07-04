@@ -2,7 +2,6 @@ package org.example;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.example.Statistic.*;
 import static org.example.Utils.*;
 
