@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Utils {
@@ -57,14 +56,10 @@ public class Utils {
 
 
     public static List<String> getInputFilesList(String[] args) {
-        List<String> inputFiles = new ArrayList<>();//создали ArrayList чтобы сложить туда сами файлы in1 in2
-
+        List<String> inputFiles = new ArrayList<>();
         int fileStartIndex = 0;
-        //идем по массиву аргументов из метода getInputFilesList
         for (int i = 0; i < args.length; i++) {
-            //если содержит - значит это флаг и пропускаем его
             if (args[i].startsWith("-")) {
-                //если этот флаг -о и -р значит пропускаем сам флаг и то, что за ним
                 if (args[i].equals("-o") || args[i].equals("-p")) {
                     i++;
                 }
@@ -83,7 +78,6 @@ public class Utils {
         List<String> fileContents = new ArrayList<>();
         for (String arg : inputFiles) {
             try {
-                //берем все строки сначала из in1, а потом из in2 и доб в fileContents
                 List<String> lines = Files.readAllLines(Paths.get(arg));
                 fileContents.addAll(lines);
             } catch (Exception e) {
